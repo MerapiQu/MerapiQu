@@ -40,7 +40,9 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Validate composer.json and composer.lock
-        run: composer validate --strict
+        run: |
+          sudo update-alternatives --set php /usr/bin/php8.3
+          composer validate --strict
 
       - name: Cache Composer packages
         id: composer-cache
