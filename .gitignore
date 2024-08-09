@@ -7,4 +7,3 @@ yarn.lock
 package-lock.json
 composer.lock
 test.php
-vendor/
