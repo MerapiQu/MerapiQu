@@ -1,5 +1,4 @@
 node_modules/
-vendor/
 content/*
 *.log
 *.sqlite
@@ -7,6 +6,4 @@ content/*
 yarn.lock
 package-lock.json
 composer.lock
-
-include/Module/*/*
 test.php
