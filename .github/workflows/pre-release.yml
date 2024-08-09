@@ -3,7 +3,6 @@ name: Prepare Release
 on:
   workflow_dispatch:
     
-
 jobs:
   prepare-release:
     runs-on: ubuntu-latest
@@ -65,47 +64,34 @@ jobs:
           git submodule foreach --recursive git checkout main
           git submodule foreach --recursive git pull origin main
 
-
-      - name: Get Last Non-Pre-Release Tag
-        id: last-release-tag
+      - name: Get last tag
+        id: last-tag
         run: |
-          # Fetch all tags and filter for non-pre-release tags
-          non_pre_release_tags=$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname)
-  
-          # Get the last non-pre-release tag
-          last_non_pre_release_tag=$(echo "$non_pre_release_tags" | head -n 1)
-  
-          if [ -z "$last_non_pre_release_tag" ]; then
-            # If no non-pre-release tags found, get the last pre-release tag
-            last_pre_release_tag=$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*-rc.*' --sort=-v:refname | head -n 1)
-            
-            if [ -z "$last_pre_release_tag" ]; then
-              # If no tags found at all, create the initial version
-              new_tag="v0.0.1"
-            else
-              # Extract major, minor, and patch components from the last pre-release tag
-              IFS='.' read -r major minor patch rc_number <<< "$last_pre_release_tag"
-              # Remove the -rc suffix
-              new_tag="v$major.$minor.$patch"
-            fi
+          git fetch --tags
+          latest_tag=$(git tag --list 'v*.*.*' | sort -V | tail -n 1)
+
+          if [ -z "$latest_tag" ]; then
+            echo "No tags found. Starting with v0.0.1"
+            new_tag="v0.0.1"
           else
-            # Extract major, minor, and patch components from the last non-pre-release tag
-            IFS='.' read -r major minor patch <<< "$last_non_pre_release_tag"
+            # Remove the 'v' prefix for easier manipulation
+            version=${latest_tag#v}
+            
             # Increment the patch version
-            incremented_patch=$((patch + 1))
-            new_tag="v$major.$minor.$incremented_patch"
+            new_version=$(echo "$version" | awk -F. -v OFS=. '{$NF++;print}')
+            
+            # Construct new tag
+            new_tag="v$new_version"
           fi
-  
-          echo "Last non-pre-release tag: $last_non_pre_release_tag"
           echo "New tag: $new_tag"
-          echo "::set-output name=new_tag::$new_tag"
-
+          echo "::set-output name=new_tag::$new_tag"     
+  
       - name: Set environment variable
-        run: echo "NEW_TAG=${{ steps.last-release-tag.outputs.new_tag }}" >> $GITHUB_ENV
-
+        run: echo "NEW_TAG=${{ steps.last-tag.outputs.new_tag }}" >> $GITHUB_ENV
+  
       - name: Display new tag
         run: echo "New tag is $NEW_TAG"
-  
+
       - name: Create Release
         uses: actions/create-release@v1
         env:
@@ -117,12 +103,11 @@ jobs:
           prerelease: false
           body: "Release with vendor files included."
 
+
   cleanup:
     runs-on: ubuntu-latest
     needs: prepare-release
     if: always()
-    env:
-      BRANCH_NAME: release
 
     steps:
       - name: Checkout code
