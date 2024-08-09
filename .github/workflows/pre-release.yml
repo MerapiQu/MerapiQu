@@ -126,6 +126,7 @@ jobs:
         run: |
           git config --local user.email "durianbohong@gmail.com"
           git config --local user.name "il4mb"
+          git pull
           echo 'vendor/' >> .gitignore
           git add .gitignore
           git commit -m "Re-add vendor to .gitignore"
