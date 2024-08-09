@@ -54,6 +54,19 @@ jobs:
           git config --local user.email "durianbohong@gmail.com"
           git config --local user.name "il4mb"
 
+      - name: Push vendor
+        run: |
+          git add -f vendor
+          git commit -m "Add vendor directory for release" || echo "No changes to commit"
+          git push origin main
+
+      - name: Initialize submodules
+        run: |
+          git submodule update --init --recursive
+          git submodule foreach --recursive git checkout main
+          git submodule foreach --recursive git pull origin main
+
+
       - name: Get Last Non-Pre-Release Tag
         id: last-release-tag
         run: |
@@ -93,7 +106,7 @@ jobs:
 
       - name: Display new tag
         run: echo "New tag is $NEW_TAG"
-
+  
       - name: Create Release
         uses: actions/create-release@v1
         env:
@@ -104,13 +117,6 @@ jobs:
           draft: false
           prerelease: false
           body: "Release with vendor files included."
-
-      - name: Push vendor directory to release branch
-        run: |
-          git checkout -b release || git checkout release
-          git add -f vendor
-          git commit -m "Include vendor directory for release" || echo "No changes to commit"
-          git push origin release
 
   cleanup:
     runs-on: ubuntu-latest
@@ -132,13 +138,8 @@ jobs:
           git checkout main
           git pull origin main
 
-      - name: Remove vendor directory from release branch
+      - name: Remove vendor directory
         run: |
-          git checkout release
           git rm -r --cached vendor
-          git commit -m "Remove vendor directory from release branch" || echo "No changes to commit"
-          git push origin release
-
-      - name: Remove release branch
-        run: |
-          git push origin --delete release
+          git commit -m "Remove vendor directory" || echo "No changes to commit"
+          git push origin main
