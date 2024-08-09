@@ -1,9 +1,0 @@
-node_modules/
-content/*
-*.log
-*.sqlite
-*.db
-yarn.lock
-package-lock.json
-composer.lock
-test.php
