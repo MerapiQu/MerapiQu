@@ -16,7 +16,7 @@ class AES
     // Private constructor to prevent direct instantiation
     private function __construct()
     {
-        $this->key = file_get_contents($_ENV["__MP_APP__"] . "/config/globkey.pem");
+        $this->key = file_get_contents($_ENV["__MP_APP__"] . "/config/globkey.pem"); 
         if ($this->key === false) {
             throw new Exception('Failed to read the encryption key');
         }

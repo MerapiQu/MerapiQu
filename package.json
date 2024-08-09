@@ -36,7 +36,8 @@
     "watch": "webpack --mode development --watch",
     "watch:module": "webpack --config ./merapi/module/webpack.config.js",
     "build": "webpack",
-    "reload": "npm unlink @il4mb/merapipanel && npm link F:\\web\\_modules\\merapipanel && npm link F:\\web\\_modules\\merapipanel\\node_modules\\react"
+    "reload": "npm unlink @il4mb/merapipanel && npm link F:\\web\\_modules\\merapipanel && npm link F:\\web\\_modules\\merapipanel\\node_modules\\react",
+    "release": "node bin/release.js"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.17.0",
