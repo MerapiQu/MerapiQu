@@ -27,12 +27,6 @@ jobs:
             php -r "unlink('composer-setup.php');"
           fi
 
-  install-dependencies:
-    runs-on: ubuntu-latest
-    needs: prepare
-    environment: release
-
-    steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -40,9 +34,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Validate composer.json and composer.lock
-        run: |
-          sudo update-alternatives --set php /usr/bin/php8.3
-          composer validate --strict
+        run: composer validate --strict
 
       - name: Cache Composer packages
         id: composer-cache
@@ -66,7 +58,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs: install-dependencies
+    needs: prepare
     environment: release
 
     steps:
