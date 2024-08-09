@@ -68,6 +68,13 @@ jobs:
           submodules: true
           token: ${{ secrets.GH_TOKEN }}
 
+      - name: Temporarily remove vendor from .gitignore
+        run: |
+          sed -i '/vendor/d' .gitignore
+          git add .gitignore
+          git commit -m "Temporarily remove vendor from .gitignore"
+          git push origin main
+
       - name: Initialize submodules
         run: |
           git submodule update --init --recursive
@@ -112,6 +119,13 @@ jobs:
           draft: false
           prerelease: true
           body: "Release with vendor files included."
+
+      - name: Re-add vendor to .gitignore
+        run: |
+          echo 'vendor/' >> .gitignore
+          git add .gitignore
+          git commit -m "Re-add vendor to .gitignore"
+          git push origin main
 
   cleanup:
     runs-on: ubuntu-latest
