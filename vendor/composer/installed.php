@@ -3,7 +3,7 @@
         'name' => 'il4mb/merapipanel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'cf0fd6bb12663e70ae13287040a3abeb2935daa1',
+        'reference' => 'bced1ed96eec35245721db332e68e03c2a4cea0a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'il4mb/merapipanel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'cf0fd6bb12663e70ae13287040a3abeb2935daa1',
+            'reference' => 'bced1ed96eec35245721db332e68e03c2a4cea0a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
