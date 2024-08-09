@@ -2,8 +2,7 @@ name: Prepare Release
 
 on:
   workflow_dispatch:
-  release:
-    types: [published]
+    
 
 jobs:
   prepare-release:
