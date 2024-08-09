@@ -70,6 +70,8 @@ jobs:
 
       - name: Temporarily remove vendor from .gitignore
         run: |
+          git config --local user.email "durianbohong@gmail.com"
+          git config --local user.name "il4mb"
           sed -i '/vendor/d' .gitignore
           git add .gitignore
           git commit -m "Temporarily remove vendor from .gitignore"
@@ -122,6 +124,8 @@ jobs:
 
       - name: Re-add vendor to .gitignore
         run: |
+          git config --local user.email "durianbohong@gmail.com"
+          git config --local user.name "il4mb"
           echo 'vendor/' >> .gitignore
           git add .gitignore
           git commit -m "Re-add vendor to .gitignore"
