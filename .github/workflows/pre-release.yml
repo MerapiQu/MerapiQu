@@ -4,17 +4,12 @@ on:
   workflow_dispatch:
     
 jobs:
-  prepare-release:
+
+  prepare:
     runs-on: ubuntu-latest
     environment: release
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-          token: ${{ secrets.GH_TOKEN }}
-
       - name: Add third-party repository for PHP
         run: |
           if ! grep -q "^deb .*/ondrej/php" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
@@ -32,6 +27,18 @@ jobs:
             php -r "unlink('composer-setup.php');"
           fi
 
+  install-dependencies:
+    runs-on: ubuntu-latest
+    needs: prepare
+    environment: release
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          token: ${{ secrets.GH_TOKEN }}
+
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
@@ -47,16 +54,25 @@ jobs:
       - name: Install dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader --no-progress
 
-      - name: Prepare Git config
+      - name: Push vendor
         run: |
           git config --local user.email "durianbohong@gmail.com"
           git config --local user.name "il4mb"
-
-      - name: Push vendor
-        run: |
           git add -f vendor
           git commit -m "Add vendor directory for release" || echo "No changes to commit"
           git push origin main
+
+  release:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    environment: release
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Initialize submodules
         run: |
@@ -100,30 +116,29 @@ jobs:
           tag_name: ${{ env.NEW_TAG }}
           release_name: "Release ${{ env.NEW_TAG }}"
           draft: false
-          prerelease: false
+          prerelease: true
           body: "Release with vendor files included."
 
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: release
+    if: always()
 
-  # cleanup:
-  #   runs-on: ubuntu-latest
-  #   needs: prepare-release
-  #   if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-  #       with:
-  #         token: ${{ secrets.GH_TOKEN }}
+      - name: Git prepare
+        run: |
+          git config --local user.email "durianbohong@gmail.com"
+          git config --local user.name "il4mb"
+          git checkout main
+          git pull origin main
 
-  #     - name: Git prepare
-  #       run: |
-  #         git config --local user.email "durianbohong@gmail.com"
-  #         git config --local user.name "il4mb"
-  #         git checkout main
-  #         git pull origin main
-
-  #     - name: Remove vendor directory
-  #       run: |
-  #         git rm -r --cached vendor
-  #         git commit -m "Remove vendor directory" || echo "No changes to commit"
-  #         git push origin main
+      - name: Remove vendor directory
+        run: |
+          git rm -r --cached vendor
+          git commit -m "Remove vendor directory" || echo "No changes to commit"
+          git push origin main
