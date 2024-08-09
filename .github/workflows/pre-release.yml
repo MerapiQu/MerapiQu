@@ -46,7 +46,9 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install dependencies
-        run: composer install --no-dev --prefer-dist --optimize-autoloader --no-progress
+        run: |
+          composer install --no-dev --prefer-dist --optimize-autoloader --no-progress
+          git clone --recursive
 
       - name: Push vendor
         run: |
