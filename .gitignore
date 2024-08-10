@@ -1,6 +1,5 @@
 node_modules/
 content/*
-.gitignore
 *.log
 *.sqlite
 *.db
