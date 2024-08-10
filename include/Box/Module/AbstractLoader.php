@@ -11,7 +11,7 @@ namespace MerapiPanel\Box\Module {
 
         protected string $directory;
         abstract function __construct(string $directory);
-        abstract function loadModule(string $name, Container $container): Module;
+        abstract function loadModule(string $name, Container $container): Module|bool;
         abstract function loadFragment(string $name, Module|Fragment $parent): Fragment|null;
         abstract function initialize(Container $container): void;
 
