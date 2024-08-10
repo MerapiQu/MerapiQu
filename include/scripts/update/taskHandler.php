@@ -1,5 +1,7 @@
 <?php
 
+set_time_limit(0);
+
 global $taskList;
 
 
@@ -9,7 +11,7 @@ $taskList[0] = function ($target_dir, $lastest) {
     if (!file_exists(dirname($output_zip))) {
         mkdir(dirname($output_zip), 0755, true);
     }
-    return downloadLastestRelease($output_zip, $lastest);
+    return downloadLastestRelease("$name.zip", $output_zip, $lastest);
 };
 
 
@@ -27,6 +29,8 @@ $taskList[1] = function ($target_dir, $lastest) {
     throw new Exception("Caught an error while unpack a module archive", 500);
 };
 
+
+
 $taskList[2] = function ($target_dir, $lastest) {
     $name    = basename($target_dir);
     $extracted_dir  = __DIR__ . "/data/" . $name;
@@ -35,18 +39,26 @@ $taskList[2] = function ($target_dir, $lastest) {
         $extracted_dir = $extractedFirstNode[0];
     }
 
-    $installHook = rtrim($extracted_dir, "\\/") . "/include/scripts/Install.hook.php";
-    if (!is_file($installHook)) throw new Exception("Failed install update, hook install not found!");
-    include_once $installHook;
+    $backupFile = __DIR__ . "/backup/" . $name . ".bak";
+    if (!file_exists(dirname($backupFile))) mkdir(dirname($backupFile));
+    createBackup($target_dir, $backupFile);
 
-    befor_install($target_dir);
-    // moveFilesAndFolders($extracted_dir, $target_dir);
-    after_install($extracted_dir);
+    try {
+        moveFilesAndFolders($extracted_dir, $target_dir);
+    } catch (Throwable $t) {
+        abortTask(2, $target_dir, $lastest);
+        throw $t;
+    }
 };
 
 
 $taskList[3] = function ($target_dir, $lastest) {
     // clean 
+    $name = basename($target_dir);
+    $backupFile = __DIR__ . "/backup/" . $name . ".bak";
+    if (file_exists($backupFile)) {
+        unlink($backupFile);
+    }
 };
 
 
@@ -63,8 +75,38 @@ function startTask($task_id, $target_dir, $lastest)
 
 
 
+function abortTask($task_id, $target_dir, $lastest)
+{
+    $name = basename($target_dir);
+    $backupFile = __DIR__ . "/backup/" . $name . ".bak";
+
+    error_log("Abort update");
+
+    // Check if the backup file exists
+    if (!file_exists($backupFile)) {
+        error_log("Backup file not found: $backupFile");
+    }
+
+    // Create a new ZipArchive instance
+    $zip = new ZipArchive();
+
+    // Open the backup file
+    if ($zip->open($backupFile) === true) {
+        // Extract the backup to the target directory
+        $zip->extractTo($target_dir);
+        $zip->close();
+        error_log("Backup extracted successfully to $backupFile");
+    } else {
+        error_log("Failed to open backup file: $backupFile");
+    }
+}
+
+
+
+
 function moveFilesAndFolders($sourceDir, $destinationDir)
 {
+
     if (!is_dir($sourceDir)) {
         throw new Exception("Source directory does not exist.");
     }
@@ -104,6 +146,7 @@ function moveFilesAndFolders($sourceDir, $destinationDir)
     removeDirectory($sourceDir);
 }
 
+
 // Function to recursively remove a directory and its contents
 function removeDirectory($dir)
 {
@@ -113,4 +156,53 @@ function removeDirectory($dir)
         (is_dir($filePath)) ? removeDirectory($filePath) : unlink($filePath);
     }
     rmdir($dir);
+}
+
+
+
+// Function to create a backup, ignoring certain files
+function createBackup($sourceDir, $backupFile)
+{
+    $zip = new ZipArchive();
+
+    if ($zip->open($backupFile, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+        throw new Exception("Cannot create backup file: $backupFile");
+    }
+
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($sourceDir), RecursiveIteratorIterator::LEAVES_ONLY);
+
+    foreach ($files as $name => $file) {
+        // Skip directories
+        if (!$file->isFile()) continue;
+
+        $filePath = $file->getRealPath();
+        $relativePath = substr($filePath, strlen($sourceDir) + 1);
+
+        // Normalize path to prevent issues with different directory separators
+        $normalizedRelativePath = str_replace('\\', '/', $relativePath);
+
+
+        // Skip the `node_modules` directory
+        if (
+            str_contains($normalizedRelativePath, 'node_modules/')
+            || str_contains($normalizedRelativePath, '.git/')
+            || str_contains($normalizedRelativePath, '.github/')
+        ) {
+            continue;
+        }
+
+        // Check file size and type
+        $fileSize = $file->getSize();
+        $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+        // Ignore images, videos, and files larger than 1MB
+        if ($fileSize > 1048576 && in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'mp4', 'avi', 'mov', 'mkv'])) {
+            continue;
+        }
+
+        // Add file to the ZIP archive
+        $zip->addFile($filePath, $relativePath);
+    }
+
+    $zip->close();
 }

@@ -56,6 +56,7 @@ function scanDirectory(dirPath, ig, filesArray, baseDir) {
         // Always include the 'vendor/' folder
         if (relativePath.startsWith('vendor') || relativePath.startsWith('.htaccess')) {
             filesArray.push(relativePath);
+            return;
         }
 
         // Handle paths starting with `include/Module/` or `include\\Module\\`
@@ -114,7 +115,7 @@ const gitignorePath = path.join('F:/www/MerapiPanel', '.gitignore');
 const ig = getGitignorePatterns(gitignorePath); // Get the .gitignore patterns
 ig.add([
     "node_modules/",
-    'bin',
+    'bin/',
     'content/',
     'schema',
     '.*',
