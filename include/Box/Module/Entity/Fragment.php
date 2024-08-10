@@ -129,9 +129,8 @@ namespace MerapiPanel\Box\Module\Entity {
                     return $result;
                 }
             } catch (Throwable $t) {
-                throw $t;
+                return null;
             }
-            throw new Exception("Could't get content, {$this->path} is not file");
         }
 
 

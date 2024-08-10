@@ -1,9 +1,11 @@
 node_modules/
 vendor/
 content/*
+vendor/
 *.log
 *.sqlite
 *.db
+*.zip
 yarn.lock
 package-lock.json
 composer.lock

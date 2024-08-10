@@ -137,21 +137,13 @@ namespace MerapiPanel\Box\Module {
         }
 
 
-        private $couter = [];
-
-        function loadModule(string $name, Container $container): Module
+        function loadModule(string $name, Container $container): Module | bool
         {
-
-            // if (isset($this->couter[$name])) {
-            //     $this->couter[$name] += 1;
-            // } else {
-            //     $this->couter[$name] = 1;
-            // }
 
             $path = Path::join($this->directory, $name);
 
             if (!file_exists($path)) {
-                throw new Exception("Module not found: $name");
+                return false;
             }
             if (!is_dir(Path::join($path, "data"))) mkdir(Path::join($path, "data"));
             if (!in_array($name, self::$defaultModules) && !file_exists(Path::join($path, ".active"))) throw new Exception("Module {$name} inactive", 500);

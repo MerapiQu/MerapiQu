@@ -36,7 +36,7 @@ namespace MerapiPanel {
             $this->module_container->initialize();
         }
 
-        public static function module($name = null): Container|Fragment|Proxy|Module|null
+        public static function module($name = null): Container|Fragment|Proxy|Module|bool
         {
             if (!$name || empty($name)) {
                 return self::$instance->module_container;

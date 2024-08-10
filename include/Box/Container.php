@@ -1,4 +1,5 @@
 <?php
+
 namespace MerapiPanel\Box {
 
     use MerapiPanel\Box\Module\AbstractLoader;
@@ -77,10 +78,12 @@ namespace MerapiPanel\Box {
         public function __get($name)
         {
             if (empty($this->stack[$name])) {
-                $this->stack[$name] = $this->loader->loadModule($name, $this);
+                $module = $this->loader->loadModule($name, $this);
+                if ($module instanceof Module) {
+                    $this->stack[$name] = $module;
+                } else return false;
             }
             return $this->stack[$name];
-
         }
 
         protected array $events = [];
