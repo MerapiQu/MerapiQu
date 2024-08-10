@@ -1,0 +1,11 @@
+node_modules/
+content/*
+vendor/
+*.log
+*.sqlite
+*.db
+
+yarn.lock
+package-lock.json
+composer.lock
+test.php
