@@ -1,0 +1,28 @@
+{
+    "scrips": [],
+    "styles": [],
+    "content": [
+        {
+            "classes": [
+                "d-flex",
+                "justify-content-center",
+                "align-items-center",
+                "vh-100",
+                "flex-column"
+            ],
+            "children": [
+                {
+                    "tagName": "h1",
+                    "children": "Client Error"
+                },
+                {
+                    "tagName": "p",
+                    "classes": [
+                        "fs-3"
+                    ],
+                    "children": "Could't fetch the page!"
+                }
+            ]
+        }
+    ]
+}

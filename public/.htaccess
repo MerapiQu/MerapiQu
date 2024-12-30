@@ -14,11 +14,6 @@ ErrorDocument 403 /index.php
 ErrorDocument 404 /index.php
 ErrorDocument 500 /index.php
 
-# Check if the requested file does not exist
-RewriteRule ^public/assets/@(.*?)/(.*) /include/Module/$1/Assets/$2 [L]
-RewriteRule ^public/assets/([A-Z][a-z]+)/(.*) /include/Module/$1/Assets/$2 [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^public/assets(.*)$ /include/buildin$1 [NC,L,QSA]
-
 RewriteCond %{REQUEST_FILENAME} !\.(css|js|svg|jpg|png|ttf|woff2|webp|webv|gif|webmanifest|txt|map)$ [NC]
-RewriteRule ^ public/index.php [NC,L,QSA]
+RewriteRule ^ index.php [NC,L,QSA]
+

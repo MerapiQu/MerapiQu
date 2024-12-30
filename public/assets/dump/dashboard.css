@@ -1,0 +1,145 @@
+:root {
+    --bs-body-bg: #f1f1f1;
+    --nav-body-bg: #ffffff;
+}
+body {
+    background-color: var(--bs-body-bg);
+}
+.sidebar {
+    position: fixed;
+    height: 100dvh;
+    width: 100%;
+    max-width: 225px;
+    background-color: var(--nav-body-bg);
+    z-index: 9999999;
+    top: 0;
+    left: 0;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+.sidebar .header {
+    min-height: 50px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    padding: 15px;
+}
+.menu-container::-webkit-scrollbar {
+    width: 0px;
+}
+.menu-container {
+    margin: 0;
+    padding: 0;
+    padding-left: 1rem;
+    padding-top: 25px;
+    font-size: 1rem;
+}
+
+.menu-container li {
+    list-style: none;
+    font-size: 1.1em;
+}
+.menu-item {
+    color: #1c1e20;
+    cursor: pointer;
+    padding: 0.25rem 1rem;
+    display: block;
+    transition: all 0.25s;
+    margin-top: -23px;
+}
+.menu-item:hover {
+    color: #0537a3;
+}
+.menu-item .item-node {
+    padding: 1rem;
+    display: block;
+}
+.menu-item .fa {
+    font-size: 1.2rem;
+    color: currentColor;
+}
+.menu-item a {
+    text-decoration: none !important;
+    font-weight: 600;
+    color: currentColor;
+}
+.menu-item:has(.active) {
+    background-color: #0000ff;
+    border-start-start-radius: 25px;
+    border-end-start-radius: 25px;
+    position: relative;
+    padding: 25px 0rem;
+    background: linear-gradient(45deg, #00000000, #00000000 50%, var(--bs-body-bg) 51%, var(--bs-body-bg));
+}
+.menu-item:has(> .active) {
+    color: #005eff;
+}
+
+.menu-item:has(.active) > .item-node {
+    text-decoration: none !important;
+    font-weight: 600;
+    color: currentColor;
+    background: var(--bs-body-bg);
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+.menu-item:has(.active)::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 25px;
+    width: 100%;
+    background-color: var(--nav-body-bg);
+    border-start-end-radius: 50px;
+}
+.menu-item:has(.active)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 25px;
+    width: 100%;
+    background-color: var(--nav-body-bg);
+    border-bottom-right-radius: 50px;
+}
+
+.menu-item:has(.active) .menu-container {
+    overflow: auto;
+    max-height: 300px;
+    border-left-color: currentColor;
+}
+
+.menu-item .menu-container {
+    max-height: 0;
+    overflow: hidden;
+    border-left: 2px solid transparent;
+    margin-left: 10px;
+    padding-top: 10px;
+    font-size: 0.9rem;
+    padding-left: 15px;
+    transition: all 0.25s;
+    transition-delay: 0.1s;
+}
+.menu-item .menu-container .menu-item {
+    opacity: 0.7;
+    margin-top: 0;
+    padding: 0;
+}
+.menu-item .menu-container .menu-item .item-node {
+    padding: 0.2rem;
+}
+.menu-item .menu-item:has(.active) {
+    opacity: 1;
+    padding: 0;
+}
+.menu-item .menu-item:has(.active)::after {
+    content: unset;
+}
+.menu-item .menu-item:has(.active)::before {
+    content: unset;
+}
+
+.menu-item .menu-item:has(.active) .item-node {
+    opacity: 1;
+    padding: 0;
+}
