@@ -34,6 +34,11 @@ const Sidebar = () => {
       path: "/panel/admin/dashboard/",
     },
     {
+      title: "Page Manager",
+      icon: "fa-file",
+      path: "/panel/admin/dashboard/page",
+    },
+    {
       title: "Settings",
       icon: "fa-cog",
       path: "/panel/admin/dashboard/settings",

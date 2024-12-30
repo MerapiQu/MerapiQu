@@ -17,16 +17,33 @@ const Content = (props: ContentProps) => {
   );
 
   useEffect(() => {
+    const styles = props.styles || [];
+    styles.forEach((style) => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = style;
+      link.type = "text/css";
+      link.classList.add("dynamic-style");
+      document.head.appendChild(link);
+    });
+    return () => {
+      document.querySelectorAll(".dynamic-style").forEach((style) => {
+        style.remove();
+      });
+    };
+  }, [props.styles]);
+
+  useEffect(() => {
     const scripts = props.scripts;
     scripts.forEach((script) => {
       const match = script.match(/(\w+)\.js/) ?? [];
       if (match[1]) {
         const scriptName = match[1];
-        import(/* webpackIgnore: true */ script).then(() => { 
-            if((window as any).Panel[`library.${scriptName}`]) {
-                const lib = (window as any).Panel[`library.${scriptName}`];
-                setContent(<lib.default />)
-            }
+        import(/* webpackIgnore: true */ script).then(() => {
+          if ((window as any).Panel[`library/${scriptName}`]) {
+            const lib = (window as any).Panel[`library/${scriptName}`];
+            setContent(<lib.default />);
+          }
         });
       }
     });

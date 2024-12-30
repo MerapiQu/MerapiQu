@@ -11,24 +11,37 @@
 
 #root {
   overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 body {
   background-color: var(--bs-body-bg);
   transition: margin-left 0.3s ease-in-out;
+  max-width: 100dvw;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 body .app-wrapper {
   padding: 0.5rem 1rem;
   margin-left: 50px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
   min-height: 100dvh;
   min-width: calc(100vw - var(--sd-min-width));
+  overflow: auto;
+  max-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  align-items: start;
+  justify-content: start;
   position: relative;
   transition: margin-left 0.3s ease-in-out;
+}
+@media screen and (min-width: 768px) {
+  body .app-wrapper {
+    min-width: auto;
+  }
 }
 body .app-wrapper > * {
   flex: 1;
@@ -87,7 +100,7 @@ body:has(.sidebar.expand) .app-wrapper {
   position: relative;
   padding: var(--menu-r) 0;
   transition: all 0.4s ease-in-out;
-  margin-top: -30px;
+  margin-top: -40px;
 }
 .sidebar .menu-container .menu .menu-item {
   padding: 1rem;
@@ -131,5 +144,3 @@ body:has(.sidebar.expand) .app-wrapper {
   bottom: 0;
   border-top-right-radius: var(--menu-r);
 }
-
-/*# sourceMappingURL=main.css.map*/

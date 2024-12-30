@@ -33,7 +33,14 @@ const implementDefault = (config, file) => {
         config.context = path.resolve(path.dirname(file), "src");
     }
     config.plugins = [
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+        }),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jquery: "jQuery",
+            "window.jQuery": "jquery"
+        }),
         ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
         ...(config.plugins || []),
     ]
@@ -69,6 +76,9 @@ const implementDefault = (config, file) => {
         aggregateTimeout: 300,
         poll: 1000,
     };
+    config.externals = {
+        ...config.externals,
+    }
     return config;
 }
 
@@ -124,9 +134,9 @@ const loadConfigs = async () => {
                 console.error("Webpack errors:", info.errors);
             }
 
-            if (stats.hasWarnings()) {
-                console.warn("Webpack warnings:", info.warnings);
-            }
+            // if (stats.hasWarnings()) {
+            //     console.warn("Webpack warnings:", info.warnings);
+            // }
 
             console.log("Webpack build completed:");
             console.log(stats.toString({ colors: true }));
