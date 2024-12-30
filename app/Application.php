@@ -3,24 +3,16 @@
 namespace App {
 
     use App\CoreModules\Database;
-    use App\CoreModules\ObjectCached;
-    use App\HttpSystem\Map\POST;
     use App\HttpSystem\Request;
     use App\HttpSystem\Response;
     use App\HttpSystem\Routers\Router;
     use App\ModuleSystem\ModuleManager;
-    use App\ModuleSystem\ModuleModel\Fragments\FragmentMethod;
-    use App\ModuleSystem\ModuleModel\Fragments\MethodEvent;
-    use App\ModuleSystem\ModuleModel\Services\ModuleService;
     use App\System\Base;
-    use App\System\Settings;
     use App\System\Theme\ThemeManager;
-    use WebService\Default\WebService as DefaultService;
-    use WebService\Panel\WebService as PanelWebService;
+    use App\WebService\Default\DefaultWebService;
+    use Panel\WebService as PanelWebService;
     use App\WebService\WebService;
     use App\WebService\WebServiceManager;
-    use Closure;
-    use Symfony\Component\Filesystem\Path;
 
     class Application extends Base
     {
@@ -38,7 +30,7 @@ namespace App {
             parent::__construct();
 
             $this->router = new Router($this->response);
-            $this->defaultWebService = new DefaultService();
+            $this->defaultWebService = new DefaultWebService();
             $this->webServiceManager = new WebServiceManager(Request::getInstance(), [
                 new PanelWebService($this->router)
             ]);

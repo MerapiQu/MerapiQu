@@ -26,7 +26,6 @@ const scanAnotherConfig = async () => {
 const isAnalyze = process.argv.includes("--analyze");
 const isDevelopment = process.env.NODE_ENV === "development";
 
-
 const implementDefault = (config, file) => {
     config.mode = isDevelopment ? "development" : "production";
     if (!config.context) {

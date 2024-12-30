@@ -1,6 +1,6 @@
 <?php
 
-namespace WebService\Panel;
+namespace Panel;
 
 use App\HttpSystem\Map\GET;
 

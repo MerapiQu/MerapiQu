@@ -24,7 +24,7 @@
         "psr-4": {
             "App\\": "app/",
             "Media\\": "media/",
-            "WebService\\": "webService/"
+            "Panel\\": "panel/"
         }
     },
     "authors": [

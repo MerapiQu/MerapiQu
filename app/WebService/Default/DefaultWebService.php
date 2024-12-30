@@ -1,12 +1,13 @@
 <?php
 
-namespace WebService\Default;
+namespace App\WebService\Default;
 
 use App\HttpSystem\HTTP_CODE;
 use App\HttpSystem\Request;
 use App\HttpSystem\Response;
+use App\WebService\WebService;
 
-class WebService extends \App\WebService\WebService
+class DefaultWebService extends WebService
 {
 
     function __construct()
