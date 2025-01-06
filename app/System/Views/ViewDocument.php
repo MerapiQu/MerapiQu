@@ -54,11 +54,12 @@ class ViewDocument extends BlockNode
                 ]),
                 new BlockNode("link", null, [
                     "rel" => "stylesheet",
+                    "data-core" => "true",
                     "href" => "/assets/dist/main.css"
                 ]),
             ]),
             new BlockNode("body", []),
-            new BlockNode("script", null, ["src" => "/assets/dist/main.js", "id" => "main-js"]),
+            new BlockNode("script", null, ["src" => "/assets/dist/main.js", "data-core" => "true"]),
         ]);
 
 

@@ -1,7 +1,7 @@
 {% do script("/assets/vendor.bundle.js", {"data-panel-core": 'true'}) %}
 {% do script("/assets/main.bundle.js", {"data-panel-core": 'true'}) %}
-{% do style("/assets/fontawesome/css/all.min.css") %}
-{% do style("/assets/main.css") %}
+{% do style("/assets/fontawesome/css/all.min.css", {"data-core": 'true'}) %}
+{% do style("/assets/main.css", {"data-core": 'true'}) %}
 {% block content %}
 <div id="root">
     <div class="sidebar">

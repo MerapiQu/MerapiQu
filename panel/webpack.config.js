@@ -6,7 +6,7 @@ const servicesEntry = () => {
     return glob.sync(root + "/**/main.{js,ts,[jt]sx}", {
         ignore: ['**/node_modules/**', '**/dist/**', '**/.git/**', '**/.vscode/**', '**/.vscode-test/**', '**/vendor/**', '**/tests/**'],
     }).reduce((acc, file) => {
-        const libName = path.basename(path.dirname(file))
+        const libName  = path.basename(path.dirname(file))
         const fullPath = path.resolve(file)
         acc[`library/${libName}`] = {
             import: fullPath,
@@ -18,8 +18,7 @@ const servicesEntry = () => {
 }
 
 
-module.exports =
-{
+module.exports = {
     // devtool: "source-map",
     entry: {
         vendor: ["react", "react-dom"],
@@ -30,11 +29,15 @@ module.exports =
         },
         ...servicesEntry(),
     },
+    // experiments: {
+    //     outputModule: true
+    // },
     output: {
         filename: "[name].bundle.js",
         path: path.resolve(__dirname, "assets"),
         library: ['Panel', '[name]'],
         libraryTarget: 'umd',
         umdNamedDefine: true,
+        // module: true
     }
 }

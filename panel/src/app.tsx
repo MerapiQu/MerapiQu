@@ -1,48 +1,22 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import Wrapper from "./components/Container/Wrapper";
-import Sidebar from "./components/Sidebars/Sidebar";
+import React from "react";
 import "./styles.scss";
-
-export const isMobile = () => {
-  return window.innerWidth < 768;
-};
-
-interface AppStrore {
-  currentPath: string;
-  setCurrentPath: (path: string) => void;
-}
-
-const AppContext = createContext<AppStrore>({} as any);
-export const useApp = () => useContext(AppContext);
+import { Menu, MenuContainer, Panel, SidebarHeader, useNav } from "@merapipanel/core/panels";
 
 const App = () => {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
-
-  const payload = {
-    currentPath,
-    setCurrentPath,
-  };
-
-  useEffect(() => {
-    updateSilentPath();
-  }, [currentPath]);
-
-  useEffect(() => {
-    window.addEventListener("popstate", updateSilentPath);
-    return () => {
-      window.removeEventListener("popstate", updateSilentPath);
-    };
-  }, []);
-
-  const updateSilentPath = () => {
-    window.history.pushState({}, "", currentPath);
-  };
 
   return (
-    <AppContext.Provider value={payload}>
-      <Sidebar />
-      <Wrapper />
-    </AppContext.Provider>
+    <Panel>
+      <SidebarHeader>
+        Merapi Panel
+      </SidebarHeader>
+      <MenuContainer>
+        <Menu link="/panel/admin/dashboard" icon="fa-home" label="Dashboard" />
+        <Menu link="/panel/admin/dashboard/pages" icon="fa-table-columns" label="Pages" />
+        <Menu link="/panel/admin/dashboard/users" icon="fa-users" label="Users" />
+        <Menu link="/panel/admin/dashboard/settings" icon="fa-cog" label="Settings" />
+        <Menu link="/panel/admin/dashboard/help" icon="fa-question-circle" label="Help" />
+      </MenuContainer>
+    </Panel>
   );
 };
 

@@ -84,6 +84,13 @@ class WebService extends AppWebService implements Interceptor
                     $script->remove();
                 }
             }
+            $styles = $document->query("link[rel=stylesheet]");
+            foreach ($styles as $style) {
+                $isCore = $style->getAttr("data-core");
+                if (!$isCore) {
+                    $style->remove();
+                }
+            }
             $response->setContent($document);
         }
 

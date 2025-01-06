@@ -24,9 +24,9 @@
     "email": "durianbohong@gmail.com"
   },
   "main": "./src/app.js",
-  "exports": [
-    "./src/app.js"
-  ],
+  "bin": {
+    "cli": "./bin/cli.js"
+  },
   "scripts": {
     "watch": "cross-env NODE_ENV=development node webpack.js --watch",
     "build": "cross-env NODE_ENV=production node webpack.js",
@@ -53,11 +53,10 @@
     "postcss": "^8.4.33",
     "postcss-loader": "^7.3.4",
     "postcss-preset-env": "^9.3.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "sass": "^1.70.0",
     "sass-loader": "^14.2.1",
     "style-loader": "^3.3.4",
+    "terser-webpack-plugin": "^5.3.11",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack-bundle-analyzer": "^4.10.2",
@@ -66,11 +65,15 @@
     "webpack-notifier": "^1.15.0"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.1.0",
     "autoprefixer": "^10.4.16",
     "huge-uploader": "^1.0.6",
     "jquery": "^3.7.1",
     "lodash": "^4.17.21",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "webpack": "^5.97.1"
   },
   "resolutions": {
     "react": "^19.0.0",
