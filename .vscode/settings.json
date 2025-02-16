@@ -1,3 +1,7 @@
 {
-    "twig-language.unformatted": false
+  "twig-language.unformatted": false,
+  "path-intellisense.extensionOnImport": true,
+  "path-intellisense.mappings": {
+    "@/*": "${workspaceFolder}/src"
+  }
 }

@@ -1,0 +1,79 @@
+/*! ./cjs/react-dom-client.development.js */
+
+/*! ./cjs/react-jsx-runtime.development.js */
+
+/*! ./cjs/scheduler.development.js */
+
+/*! @/scss/main.scss */
+
+/*! react */
+
+/*! react-dom */
+
+/*! react-dom/client */
+
+/*! react/jsx-runtime */
+
+/*! scheduler */
+
+/*!**********************!*\
+  !*** ./src/main.tsx ***!
+  \**********************/
+
+/*!****************************!*\
+  !*** ./src/scss/main.scss ***!
+  \****************************/
+
+/*!*****************************************!*\
+  !*** ./node_modules/scheduler/index.js ***!
+  \*****************************************/
+
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+
+/*!*******************************************!*\
+  !*** ./node_modules/react/jsx-runtime.js ***!
+  \*******************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/scheduler/cjs/scheduler.development.js ***!
+  \*************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/react/cjs/react-jsx-runtime.development.js ***!
+  \*****************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/react-dom/cjs/react-dom-client.development.js ***!
+  \********************************************************************/
+
+/**
+ * @license React
+ * react-dom-client.development.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-jsx-runtime.development.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * scheduler.development.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */

@@ -1,0 +1,7 @@
+{% do document.head.append(head|raw) %}
+
+{% block content %}
+	<div id="root"></div>
+	<script src="/app/static/vendor.bundle.js"></script>
+	<script src="/app/static/main.bundle.js"></script>
+{% endblock %}
