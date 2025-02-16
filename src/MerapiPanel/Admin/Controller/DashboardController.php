@@ -11,6 +11,6 @@ class DashboardController
     #[Route(path: "/", method: Method::GET)]
     function index()
     {
-        return "Hallo World";
+        return view("base");
     }
 }

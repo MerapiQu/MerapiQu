@@ -18,7 +18,8 @@
         "doctrine/orm": "^3.2",
         "doctrine/annotations": "^2.0",
         "phpfastcache/phpfastcache": "^9.2",
-        "il4mb/routing": "^0.1.21"
+        "il4mb/routing": "^0.1.21",
+        "il4mb/blocknode": "@dev"
     },
     "license": "MIT",
     "autoload": {
