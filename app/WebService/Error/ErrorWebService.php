@@ -3,11 +3,11 @@
 namespace App\WebService\Error;
 
 use App\Application;
-use App\HttpSystem\HTTP_CODE;
-use App\HttpSystem\HTTP_CONTENT;
-use App\HttpSystem\Request;
-use App\HttpSystem\Response;
 use App\WebService\WebService;
+use Il4mb\Routing\Http\Code;
+use Il4mb\Routing\Http\ContentType;
+use Il4mb\Routing\Http\Request;
+use Il4mb\Routing\Http\Response;
 
 class ErrorWebService extends WebService
 {
@@ -31,10 +31,10 @@ class ErrorWebService extends WebService
 
         if (!is_array($content)) return parent::dispath($response);
 
-        $errorHttpCode = HTTP_CODE::fromCode($content['code'] ?? 500);
-        $response->setCode($errorHttpCode ?? HTTP_CODE::INTERNAL_SERVER_ERROR);
+        $errorHttpCode = Code::fromCode($content['code'] ?? 500);
+        $response->setCode($errorHttpCode ?? Code::INTERNAL_SERVER_ERROR);
 
-        if ($request->isAjax() || $request->isAccept(HTTP_CONTENT::JSON)) {
+        if ($request->isAjax() || $request->isAccept(ContentType::JSON)) {
 
             $response->setContentType("application/json");
 
@@ -53,13 +53,13 @@ class ErrorWebService extends WebService
 
             // Prepare the final response content
             $newContent = [
-                "status" => $code === HTTP_CODE::OK,
+                "status" => $code === Code::OK,
                 ...(is_array($content) ? $content : ["message" => $content])
             ];
 
             $response->setContent($newContent);
         } else {
-            if ($code === HTTP_CODE::NOT_FOUND) {
+            if ($code === Code::NOT_FOUND) {
                 $response->setContent(view("404"));
             } else {
                 $response->setContentType("text/html");

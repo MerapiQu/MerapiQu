@@ -3,9 +3,6 @@
 namespace App {
 
     use App\CoreModules\Database;
-    use App\HttpSystem\Request;
-    use App\HttpSystem\Response;
-    use App\HttpSystem\Routers\Router;
     use App\ModuleSystem\ModuleManager;
     use App\System\Base;
     use App\System\Theme\ThemeManager;
@@ -13,10 +10,11 @@ namespace App {
     use Panel\WebService as PanelWebService;
     use App\WebService\WebService;
     use App\WebService\WebServiceManager;
+    use Il4mb\Routing\Http\Response;
+    use Il4mb\Routing\Router;
 
     class Application extends Base
     {
-
         protected ModuleManager $moduleManager;
         protected Router $router;
         protected WebService $defaultWebService;
@@ -29,11 +27,11 @@ namespace App {
 
             parent::__construct();
 
-            $this->router = new Router($this->response);
+            $this->router = new Router(interceptors: [], options: []);
             $this->defaultWebService = new DefaultWebService();
-            $this->webServiceManager = new WebServiceManager(Request::getInstance(), [
-                new PanelWebService($this->router)
-            ]);
+            // $this->webServiceManager = new WebServiceManager(Request::getInstance(), [
+            //     new PanelWebService($this->router)
+            // ]);
             // $this->moduleManager =  new ModuleManager(__DIR__ . "/../media/Modules");
             // $modulePaths = $this->moduleManager->getModulePaths();
             // foreach ($modulePaths as $key => $modulePath) {

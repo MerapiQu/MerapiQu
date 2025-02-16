@@ -2,10 +2,9 @@
 
 namespace App\WebService\Default;
 
-use App\HttpSystem\HTTP_CODE;
-use App\HttpSystem\Request;
-use App\HttpSystem\Response;
 use App\WebService\WebService;
+use Il4mb\Routing\Http\Request;
+use Il4mb\Routing\Http\Response;
 
 class DefaultWebService extends WebService
 {

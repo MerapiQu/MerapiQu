@@ -2,24 +2,21 @@
 
 namespace App\System {
 
-    use App\HttpSystem\HTTP_CODE;
-    use App\HttpSystem\Response;
     use App\System\Exceptions\ErrorWrapper;
     use App\WebService\Error\ErrorWebService;
     use App\WebService\WebService;
+    use Il4mb\Routing\Http\Response;
 
     class Base
     {
 
         private $errors = [];
         private WebService $errorWebService;
-        protected Response $response;
 
         public function __construct()
         {
 
             $this->errorWebService = new ErrorWebService();
-            $this->response   = new Response();
 
             set_error_handler([$this, "__errorHandler"]);
             register_shutdown_function([$this, "__onProgramFinish"]);
@@ -65,24 +62,19 @@ namespace App\System {
             $code    = $t->getCode();
             $message = $t->getMessage();
 
-            $this->response->setCode(HTTP_CODE::fromCode($code) ?? HTTP_CODE::INTERNAL_SERVER_ERROR);
-            $this->response->setContent([
-                "code"    => $code,
-                "message" => $message,
-                "snippet" => $t->getSnippet(),
-                "title"   => $t->getTitle(),
-                "file"    => $t->getFile(),
-                "line"    => $t->getLine(),
-                "stackTrace" => $t->getStackTrace()
-            ]);
-            $finalResponse = $this->errorWebService->dispath($this->response);
-            echo $finalResponse->send();
+            // $this->response->setCode(HTTP_CODE::fromCode($code) ?? HTTP_CODE::INTERNAL_SERVER_ERROR);
+            // $this->response->setContent([
+            //     "code"    => $code,
+            //     "message" => $message,
+            //     "snippet" => $t->getSnippet(),
+            //     "title"   => $t->getTitle(),
+            //     "file"    => $t->getFile(),
+            //     "line"    => $t->getLine(),
+            //     "stackTrace" => $t->getStackTrace()
+            // ]);
+            // $finalResponse = $this->errorWebService->dispath($this->response);
+            // echo $finalResponse->send();
             exit();
-        }
-
-        function getResponse(): Response
-        {
-            return $this->response;
         }
     }
 }

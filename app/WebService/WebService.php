@@ -5,11 +5,11 @@ namespace App\WebService;
 use App\ContentManagement\PagesManager;
 use App\CoreModules\Blocks\TypedNodeManager;
 use App\CoreModules\Patterns\PatternManager;
-use App\HttpSystem\Request;
-use App\HttpSystem\Response;
 use App\System\Views\View;
 use App\System\Views\ViewDocument;
 use App\System\Views\ViewLoader;
+use Il4mb\Routing\Http\Request;
+use Il4mb\Routing\Http\Response;
 use Symfony\Component\Filesystem\Path;
 
 abstract class WebService

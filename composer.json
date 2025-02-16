@@ -17,14 +17,16 @@
         "league/commonmark": "^2.5",
         "doctrine/orm": "^3.2",
         "doctrine/annotations": "^2.0",
-        "phpfastcache/phpfastcache": "^9.2"
+        "phpfastcache/phpfastcache": "^9.2",
+        "il4mb/routing": "^0.1.21"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Media\\": "media/",
-            "Panel\\": "panel/"
+            "Panel\\": "panel/",
+            "MerapiPanel\\": "src/MerapiPanel/"
         }
     },
     "authors": [
