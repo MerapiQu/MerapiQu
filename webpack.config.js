@@ -7,6 +7,7 @@ const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const TerserPlugin = require("terser-webpack-plugin");
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const stylesHandler = MiniCssExtractPlugin.loader;
 const isAnalyze = process.argv.includes("--analyze");
@@ -110,9 +111,11 @@ module.exports = {
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js", ".jsx"],
-        alias: {
-            "@/*": path.resolve(__dirname, 'src/*'),
-        }
+        plugins: [
+            new TsconfigPathsPlugin({
+                configFile: "./tsconfig.json", // Path to your tsconfig.json
+            }),
+        ],
     },
     watch: process.argv.includes("--watch"),
     watchOptions: {

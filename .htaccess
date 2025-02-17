@@ -16,7 +16,7 @@ ErrorDocument 500 /index.php
 
 # Check if the requested file does not exist
 RewriteRule ^public/assets/@(.*?)/(.*) /include/Module/$1/Assets/$2 [L]
-RewriteRule ^public/assets/([A-Z][a-z]+)/(.*) /include/Module/$1/Assets/$2 [L]
+RewriteRule ^static/([A-Z][a-z]+) /app/static/$1 [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^public/assets(.*)$ /include/buildin$1 [NC,L,QSA]
 

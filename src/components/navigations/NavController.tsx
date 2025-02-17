@@ -5,9 +5,11 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { INavigationContent } from "@/components/models/INavFragment";
+import {
+  NavigationPayloads,
+  NavigationResponse,
+} from "@/interfaces/Navigation";
 import NavLoader from "./NavLoader";
-import { IResponse } from "@/components/models/IResponse";
 import { NavFragmentRef } from "./NavFragment";
 
 export interface NavHostProps {
@@ -30,7 +32,7 @@ export interface NavControllerProps {
 }
 
 export interface NavEventProps {
-  loaded?: ((data: IResponse<INavigationContent>) => void)[];
+  loaded?: ((data: NavigationResponse) => void)[];
   error?: ((error: Error) => void)[];
   navigate?: ((url: string) => void)[];
   popstate?: (() => void)[];
@@ -112,7 +114,7 @@ const NavController = ({ children }: NavControllerProps) => {
         onStartLoad={() => {
           dispatchEvents("loaded");
         }}
-        onLoaded={(data: IResponse<INavigationContent>) => {
+        onLoaded={(data: NavigationResponse) => {
           dispatchEvents("loaded", data);
         }}
         onError={(error: Error) => {

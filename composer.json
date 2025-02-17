@@ -27,7 +27,7 @@
             "App\\": "app/",
             "Media\\": "media/",
             "Panel\\": "panel/",
-            "MerapiPanel\\": "src/MerapiPanelModule/"
+            "MerapiPanel\\": "include/"
         }
     },
     "authors": [

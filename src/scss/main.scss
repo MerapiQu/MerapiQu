@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    max-width: 100dvw;
+    max-height: 100dvh;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+.loading-container {
+    height: 100dvh;
+    width: 100dvw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    & * {
+        font-size: 2.2rem;
+        font-weight: 700;
+    }
+}
+
+@import "./bootstrap/bootstrap-utilities.scss";
+@import "./bootstrap/bootstrap-grid.scss";

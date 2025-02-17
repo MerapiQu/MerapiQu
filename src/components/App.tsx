@@ -8,7 +8,6 @@ const App = () => {
       <NavController>
         <NavFragment>
           <div className="loading-container">
-            <div className="loader"></div>
             <div>Please wait...</div>
           </div>
         </NavFragment>

@@ -1,0 +1,15 @@
+{% do document.head.append({tagName: "link", attribute: {rel: "stylesheet", href: "/app/static/main.css"}}) %}
+
+{% do document.head.append(head|raw) %}
+
+{% block content %}
+	<div>
+		<div id="root">
+			<div classname="loading-container">
+				<div>Please wait...</div>
+			</div>
+		</div>
+		<script src="/app/static/vendor.bundle.js"></script>
+		<script src="/app/static/main.bundle.js"></script>
+	</div>
+{% endblock %}

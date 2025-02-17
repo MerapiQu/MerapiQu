@@ -1,0 +1,123 @@
+body {
+    background-color: #242424;
+    color: #ffffff;
+}
+
+.animation-shadow {
+    position: fixed;
+    top: var(--pos-y, 50%);
+    left: var(--pos-x, 50%);
+    transform: translate(-50%, -50%) rotate(var(--rotation, 0deg));
+    transition:
+        transform 4s ease-in-out,
+        left 4s ease-in-out,
+        top 4s ease-in-out,
+        rotate 10s ease-in-out;
+    z-index: -1;
+    will-change: transform, left, top;
+}
+.animation-shadow::after,
+.animation-shadow::before {
+    content: "";
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -2;
+    border-radius: 5rem;
+    opacity: 0.9;
+    transition: all 3s ease-in-out;
+    will-change: background-color, filter, transform;
+}
+
+.animation-shadow::after {
+    background-color: var(--color-a);
+    margin-left: -150px;
+    filter: blur(var(--blura, 130px));
+}
+
+.animation-shadow::before {
+    background-color: var(--color-b);
+    margin-left: 150px;
+    filter: blur(var(--blurb, 130px));
+}
+/* .tracer-wrapper {
+    background: linear-gradient(to bottom, #d20a0a, #e08686b3);
+    background-clip: text;
+    color: transparent;
+} */
+
+#error-snippet {
+    position: relative;
+    background: transparent;
+    color: #d1d1d1;
+    display: block;
+    width: 100%;
+    white-space: pre;
+    overflow: auto;
+}
+
+.higlight-line {
+    color: red !important;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+.higlight-line::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 5rem;
+    background: red;
+}
+
+.snippet-line:has(.higlight-line) {
+    text-decoration: wavy;
+    text-decoration-line: underline;
+    text-decoration-color: red;
+}
+.snippet-line {
+    position: relative;
+}
+.snippet-number {
+    color: #a0a0a0;
+    margin-left: 0.2rem;
+    padding: 0 0.8rem;
+}
+.snippet-number * {
+    color: #a0a0a0 !important;
+}
+.snippet-string {
+    color: #f29b73;
+    font-weight: 800;
+}
+.snippet-variable {
+    color: #6abbf4;
+    font-weight: 800;
+}
+.snippet-common {
+    color: #0095ff;
+} /* dcsddddddddddddd */
+.snippet-void {
+    color: #ffd95a;
+}
+.snippet-entity {
+    color: #1ad671;
+}
+.snippet-comment,
+.snippet-comment * {
+    color: #2d963e;
+    font-weight: 400;
+}
+.snippet-char {
+    color: #ffd95a;
+}
+.snippet-digit {
+    color: #ddf273;
+}

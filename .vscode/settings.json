@@ -1,7 +1,4 @@
 {
-  "twig-language.unformatted": false,
-  "path-intellisense.extensionOnImport": true,
-  "path-intellisense.mappings": {
-    "@/*": "${workspaceFolder}/src"
-  }
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
